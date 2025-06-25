@@ -1,4 +1,4 @@
-NewsNinja - Stealthy News Aggregator
+NewsNinja---AI-Audio-Briefs-via-News-Reddit
 
 Your personal news ninja that silently gathers headlines and Reddit reactions, then delivers audio briefings straight to your ears. *No scroll, just soul.*
 
@@ -14,14 +14,14 @@ PREREQUISITES
 - Python 3.9+
 - Bright Data account (https://brightdata.com)
 - ElevenLabs account (https://elevenlabs.io)
-
+- Google Ai studio API key (https://aistudio.google.com/apikey)
 ---
 QUICK START
 
 1. Clone the Dojo
 ```
-git clone https://github.com/AIwithhassan/newsninja.git
-cd NewsNinja
+git clone https://github.com/HRXHarshal/NewsNinja---AI-Audio-Briefs-via-News-Reddit.git
+cd NewsNinja---AI-Audio-Briefs-via-News-Reddit
 ```
 
 2. Install Dependencies
@@ -34,7 +34,13 @@ pipenv shell
 Create .env file:
 ```
 cp .env.example .env
-```
+- BRIGHTDATA_MCP_KEY : Your API key for Bright Data's Mobile Collector Proxy (MCP) service, used for web scraping.
+- WEB_UNLOCKER_ZONE : The specific zone name configured in your Bright Data account for web unlocking.
+- BROWSER_AUTH : Authentication token or credentials for browser-based operations, likely related to Bright Data's browser automation or similar services.
+- API_TOKEN : This appears to be a duplicate or alternative to BRIGHTDATA_MCP_KEY based on its value. It's likely another Bright Data API token.
+
+- GEMINI_API_KEY : Your API key for Google's Gemini AI models.
+- ELEVENLABS_API_KEY : Your API key for ElevenLabs, used for text-to-speech conversion.
 
 Configure your secrets in .env:
 ```
@@ -87,7 +93,5 @@ NOTES
 
 ---
 SUPPORT
-Open an issue: https://github.com/yourusername/NewsNinja/issues
+Open an issue: https://github.com/HRXHarshal/NewsNinja---AI-Audio-Briefs-via-News-Reddit/issues
 Bright Data support: https://brightdata.com/support
-
-*"In the darkness of information overload, be the ninja."* 🌑
