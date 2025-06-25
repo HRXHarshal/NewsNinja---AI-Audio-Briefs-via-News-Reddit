@@ -1,4 +1,6 @@
+---
 NewsNinja---AI-Audio-Briefs-via-News-Reddit
+---
 
 Your personal news ninja that silently gathers headlines and Reddit reactions, then delivers audio briefings straight to your ears. *No scroll, just soul.*
 
@@ -45,12 +47,16 @@ cp .env.example .env
 Configure your secrets in .env:
 ```
 # Bright Data
+```
 BRIGHTDATA_MCP_KEY="your_mcp_api_key"
 BROWSER_AUTH="your_browser_auth_token"
+```
 
 # ElevenLabs 
+```
 ELEVENLABS_API_KEY="your_text_to_speech_key"
 ```
+
 
 4. Prepare Your Weapons (Bright Data Setup)
 - Create MCP zone: https://brightdata.com/cp/zones
@@ -59,12 +65,14 @@ ELEVENLABS_API_KEY="your_text_to_speech_key"
 
 ---
 RUNNING THE NINJA
+---
+
 
 First terminal (Backend):
 ```
 pipenv run python backend.py
-```
 
+```
 Second terminal (Frontend):
 ```
 pipenv run streamlit run frontend.py
@@ -72,8 +80,9 @@ pipenv run streamlit run frontend.py
 
 ---
 PROJECT STRUCTURE
+---
 ```
-.
+
 ├── frontend.py          # Streamlit UI
 ├── backend.py           # API & data processing  
 ├── utils.py             # UTILS  
@@ -84,14 +93,16 @@ PROJECT STRUCTURE
 ├── .env.example         # Secret map template
 └── requirements.txt     # Alternative dependency list
 ```
-
 ---
 NOTES
+---
 - First scrape takes 15-20 seconds (good ninjas are patient)
 - Reddit scraping uses real browser emulation via MCP
 - Keep .env file secret (ninjas never reveal their tools)
 
 ---
 SUPPORT
+---
 Open an issue: https://github.com/HRXHarshal/NewsNinja---AI-Audio-Briefs-via-News-Reddit/issues
+
 Bright Data support: https://brightdata.com/support
