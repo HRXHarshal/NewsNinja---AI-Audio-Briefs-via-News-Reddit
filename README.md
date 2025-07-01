@@ -1,4 +1,11 @@
 ---
+Demo
+---
+![Untitled video - Made with Clipchamp](https://github.com/user-attachments/assets/96795f14-dab0-4855-a421-780a2e749f49)
+
+Full Demo: https://youtu.be/hUTTQDcY15I 
+
+---
 NewsNinja---AI-Audio-Briefs-via-News-Reddit
 ---
 
@@ -100,9 +107,3 @@ NOTES
 - Reddit scraping uses real browser emulation via MCP
 - Keep .env file secret (ninjas never reveal their tools)
 
----
-SUPPORT
----
-Open an issue: https://github.com/HRXHarshal/NewsNinja---AI-Audio-Briefs-via-News-Reddit/issues
-
-Bright Data support: https://brightdata.com/support
