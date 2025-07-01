@@ -1,4 +1,17 @@
 ---
+Demo
+---
+![Screenshot 2025-07-01 124914](https://github.com/user-attachments/assets/c656373d-b387-4ccd-9584-cf5c4b5869cf)
+
+![Screenshot 2025-07-01 124952](https://github.com/user-attachments/assets/654f3b9c-de55-4008-bfeb-60928e7e72e5)
+
+https://github.com/user-attachments/assets/7b70c38e-d693-4435-b78e-833917c97180
+
+
+
+Full Demo: https://youtu.be/hUTTQDcY15I 
+
+---
 NewsNinja---AI-Audio-Briefs-via-News-Reddit
 ---
 
@@ -100,9 +113,3 @@ NOTES
 - Reddit scraping uses real browser emulation via MCP
 - Keep .env file secret (ninjas never reveal their tools)
 
----
-SUPPORT
----
-Open an issue: https://github.com/HRXHarshal/NewsNinja---AI-Audio-Briefs-via-News-Reddit/issues
-
-Bright Data support: https://brightdata.com/support
