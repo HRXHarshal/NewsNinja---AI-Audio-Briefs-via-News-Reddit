@@ -1,7 +1,13 @@
 ---
 Demo
 ---
-![Untitled video - Made with Clipchamp](https://github.com/user-attachments/assets/96795f14-dab0-4855-a421-780a2e749f49)
+![Screenshot 2025-07-01 124914](https://github.com/user-attachments/assets/c656373d-b387-4ccd-9584-cf5c4b5869cf)
+
+![Screenshot 2025-07-01 124952](https://github.com/user-attachments/assets/654f3b9c-de55-4008-bfeb-60928e7e72e5)
+
+https://github.com/user-attachments/assets/7b70c38e-d693-4435-b78e-833917c97180
+
+
 
 Full Demo: https://youtu.be/hUTTQDcY15I 
 
