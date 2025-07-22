@@ -10,7 +10,6 @@ fastapi = "*"
 python-dotenv = "*"
 beautifulsoup4 = "*"
 lxml = "*"
-ollama = "*"
 elevenlabs = "*"
 aiolimiter = "*"
 langgraph = "*"
@@ -18,8 +17,10 @@ mcp = "*"
 langchain-mcp-adapters = "*"
 gtts = "*"
 google-generativeai = "*"
+murf = "*"
+ollama = "*"
 
 [dev-packages]
 
 [requires]
-python_version = "3.11"
+python_version = "3.12"
