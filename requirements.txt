@@ -33,3 +33,12 @@ gTTS
 # Markdown
 markdown
 
+mcp
+
+# Additional dependencies from Pipfile
+langchain-anthropic
+lxml
+elevenlabs
+langgraph
+langchain-mcp-adapters
+

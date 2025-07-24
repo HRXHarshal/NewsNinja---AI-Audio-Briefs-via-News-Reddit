@@ -2,10 +2,11 @@ import streamlit as st
 import requests
 from typing import Literal
 import base64 # Import base64 for encoding/decoding binary data (audio content)
+import os
 
 # Constants
 SOURCE_TYPES = Literal["news", "reddit", "both"]
-BACKEND_URL = "http://localhost:1234"  # Define the URL of the FastAPI backend server
+BACKEND_URL = os.getenv("BACKEND_URL", "http://localhost:1234")  # Define the URL of the FastAPI backend server
 
 def main(): 
     # Set the title and a descriptive markdown header for the Streamlit app
