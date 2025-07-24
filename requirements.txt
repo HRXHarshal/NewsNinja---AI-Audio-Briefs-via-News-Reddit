@@ -1,0 +1,36 @@
+# Core Web & API
+fastapi
+uvicorn
+
+# Frontend
+streamlit
+
+# HTTP & Web
+requests
+aiohttp
+beautifulsoup4
+
+# Async
+aiolimiter
+tenacity
+
+# Data
+pydantic
+
+# Environment Variables
+python-dotenv
+
+# Google Generative AI (Gemini)
+google-generativeai
+
+# Murf TTS Python SDK
+murf
+
+# Optional: TTS Fallback
+gTTS
+
+# Markdown
+markdown
+
+# Miscellaneous
+base64
