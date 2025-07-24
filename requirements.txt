@@ -32,5 +32,3 @@ gTTS
 # Markdown
 markdown
 
-# Miscellaneous
-base64
