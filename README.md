@@ -59,6 +59,8 @@ cp .env.example .env
 - MURF_WORKSPACE_ID= YOUR workspace name of  MURF API key
 - ELEVENLABS_API_KEY : Your API key for ElevenLabs, used for text-to-speech conversion.
 
+Important NOTE : For LLM use either one of Gemini or Anthropic model and TTS conversion use either one of (MURF API or ElevenLabs)
+The above code uses Gemini + MURF AI (prefered) . 
 
 Configure your secrets in .env:
 ```
