@@ -9,7 +9,7 @@ https://github.com/user-attachments/assets/7b70c38e-d693-4435-b78e-833917c97180
 
 
 
-Full Demo: https://youtu.be/hUTTQDcY15I 
+Full Demo: [Demo Video Link](https://youtu.be/W-kBjDjm0aQ?si=UrvRYEcS_dRC9E8z)
 
 ---
 NewsNinja---AI-Audio-Briefs-via-News-Reddit
@@ -26,10 +26,10 @@ FEATURES
 
 ---
 PREREQUISITES
-- Python 3.9+
+- Python 3.12
 - Bright Data account (https://brightdata.com)
-- ElevenLabs account (https://elevenlabs.io)
-- Google Ai studio API key (https://aistudio.google.com/apikey)
+- MURF API (https://murf.ai/api/docs/introduction/overview) OR ElevenLabs account (https://elevenlabs.io)
+- Google AI studio API key (https://aistudio.google.com/apikey)
 ---
 QUICK START
 
@@ -55,7 +55,10 @@ cp .env.example .env
 - API_TOKEN : This appears to be a duplicate or alternative to BRIGHTDATA_MCP_KEY based on its value. It's likely another Bright Data API token.
 
 - GEMINI_API_KEY : Your API key for Google's Gemini AI models.
+- MURF_API_KEY= Your API key from MURF API 
+- MURF_WORKSPACE_ID= YOUR workspace name of  MURF API key
 - ELEVENLABS_API_KEY : Your API key for ElevenLabs, used for text-to-speech conversion.
+
 
 Configure your secrets in .env:
 ```
@@ -65,9 +68,9 @@ BRIGHTDATA_MCP_KEY="your_mcp_api_key"
 BROWSER_AUTH="your_browser_auth_token"
 ```
 
-# ElevenLabs 
+# MURF API 
 ```
-ELEVENLABS_API_KEY="your_text_to_speech_key"
+MURF_API_KEY="your_text_to_speech_key"
 ```
 
 
@@ -103,6 +106,7 @@ PROJECT STRUCTURE
 ├── reddit_scraper.py    # Reddit Scraper  
 ├── models.py            # Pydantic model
 ├── Pipfile              # Dependency scroll
+|── test-murf.py         # For testing MURF TTS API 
 ├── .env.example         # Secret map template
 └── requirements.txt     # Alternative dependency list
 ```
@@ -111,5 +115,5 @@ NOTES
 ---
 - First scrape takes 15-20 seconds (good ninjas are patient)
 - Reddit scraping uses real browser emulation via MCP
-- Keep .env file secret (ninjas never reveal their tools)
+- Keep .env file secret 
 
