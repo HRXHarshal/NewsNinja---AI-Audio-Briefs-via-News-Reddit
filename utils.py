@@ -234,7 +234,8 @@ Remember: Your only output should be a clean script that is ready to be read out
 
 def text_to_audio_murf(
     text: str,
-    voice_id: str = "en-US-natalie",
+    voice_id: str,
+    language: str = "en-US",
     format_type: str = "MP3",
     sample_rate: float = 44100.0,
     output_dir: str = "audio",
@@ -242,99 +243,44 @@ def text_to_audio_murf(
     channel_type: str = "STEREO",
     pitch: int = 0,
     rate: float = 1.0,
-    style: str = None
+    style: str = None,
 ) -> str:
     """
-    Converts text to speech using Murf API and saves it to audio/ directory.
-    
-    Args:
-        text: The text to be converted to speech
-        voice_id: Murf voice ID (e.g., "en-US-natalie", "en-US-cooper")
-        format_type: Audio format (MP3, WAV, FLAC, ALAW, ULAW)
-        sample_rate: Audio sample rate (8000, 24000, 44100, 48000)
-        output_dir: Directory to save the audio file
-        api_key: Murf API key (will use MURF_API_KEY env var if not provided)
-        channel_type: STEREO or MONO
-        pitch: Voice pitch adjustment (-50 to 50)
-        rate: Speech rate multiplier (0.5 to 2.0)
-        style: Voice style for generation
-        
-    Returns:
-        str: Path to the saved audio file.
+    Convert text to speech with Murf API Gen-2, save to file, and
+    return the local file path.
     """
-    try:
-        api_key = api_key or os.getenv("MURF_API_KEY")
-        if not api_key:
-            print(f"[{datetime.now()}] Murf: MURF_API_KEY is missing.")
-            raise ValueError("Murf API key is required.")
+    from murf import Murf
+    api_key = api_key or os.getenv("MURF_API_KEY")
+    if not api_key:
+        raise ValueError("MURF_API_KEY missing")
 
-        print(f"[{datetime.now()}] Murf: Initializing Murf client...")
-        client = Murf(api_key=api_key)
+    client = Murf(api_key=api_key)
 
-        print(f"[{datetime.now()}] Murf: Converting text to speech...")
-        
-        # Prepare generation parameters
-        generation_params = {
-            "text": text,
-            "voice_id": voice_id,
-            "format": format_type,
-            "sample_rate": sample_rate,
-            "channel_type": channel_type,
-            "pitch": pitch,
-            "rate": rate
-        }
-        
-        # Add style if provided
-        if style:
-            generation_params["style"] = style
-        
-        # Generate speech using Murf API
-        response = client.text_to_speech.generate(**generation_params)
-        
-        # Ensure output directory exists
-        os.makedirs(output_dir, exist_ok=True)
-        
-        # Generate unique filename
-        filename = f"tts_{datetime.now().strftime('%Y%m%d_%H%M%S')}.mp3"
-        filepath = os.path.join(output_dir, filename)
+    gen = {
+        "text": text,
+        "voice_id": voice_id,
+        "format": format_type,
+        "sample_rate": sample_rate,
+        "channel_type": channel_type,
+        "pitch": pitch,
+        "rate": rate,
+    }
+    if style:
+        gen["style"] = style
 
-        print(f"[{datetime.now()}] Murf: Downloading audio file to: {filepath}")
+    resp = client.text_to_speech.generate(**gen)
 
-        # Based on your successful debugging output, the response has 'audio_file' attribute
-        if hasattr(response, 'audio_file') and response.audio_file:
-            print(f"[{datetime.now()}] Murf: Downloading from audio_file URL...")
-            audio_response = requests.get(response.audio_file)
-            audio_response.raise_for_status()
+    Path(output_dir).mkdir(exist_ok=True)
+    fp = Path(output_dir) / f"tts_{datetime.now():%Y%m%d_%H%M%S}.mp3"
 
-            with open(filepath, "wb") as f:
-                f.write(audio_response.content)
-                
-            print(f"[{datetime.now()}] Murf: Audio file saved successfully.")
-            return filepath
-        else:
-            # Fallback: try other possible response structures
-            if hasattr(response, 'audio_url') and response.audio_url:
-                print(f"[{datetime.now()}] Murf: Downloading from audio_url...")
-                audio_response = requests.get(response.audio_url)
-                audio_response.raise_for_status()
-                with open(filepath, "wb") as f:
-                    f.write(audio_response.content)
-                return filepath
-            elif hasattr(response, 'url') and response.url:
-                print(f"[{datetime.now()}] Murf: Downloading from url...")
-                audio_response = requests.get(response.url)
-                audio_response.raise_for_status()
-                with open(filepath, "wb") as f:
-                    f.write(audio_response.content)
-                return filepath
-            else:
-                print(f"[{datetime.now()}] Murf: ERROR - Could not find audio URL in response")
-                print(f"[{datetime.now()}] DEBUG: Available response attributes: {[attr for attr in dir(response) if not attr.startswith('_')]}")
-                raise Exception("Murf API did not provide an audio URL or file.")
+    url = getattr(resp, "audio_file", None) or getattr(resp, "url", None)
+    if not url:
+        raise RuntimeError("Murf response missing audio URL")
 
-    except Exception as e:
-        print(f"[{datetime.now()}] Murf: Error converting text to audio: {str(e)}")
-        raise e
+    audio = requests.get(url)
+    audio.raise_for_status()
+    fp.write_bytes(audio.content)
+    return str(fp)
 
 def tts_to_audio(text: str, language: str = 'en') -> str:
     """
@@ -359,6 +305,43 @@ def tts_to_audio(text: str, language: str = 'en') -> str:
     except Exception as e:
         print(f"[{datetime.now()}] gTTS: Error converting text to audio with gTTS: {str(e)}")
         return None
+
+#  ─────────────────────────────────────────────────────────────
+#  Language helpers
+#  ─────────────────────────────────────────────────────────────
+VOICE_BY_LANG = {
+    'en': 'wayne',  # American English Middle-Aged Male
+    'hi': 'shweta',  # Hindi Middle-Aged Female
+    'es': 'valeria',  # Spanish Middle-Aged Female
+    'fr': 'victor',  # French Middle-Aged Male
+    'de': 'max',  # German Young Adult Male
+    'it': 'vera',  # Italian Middle-Aged Female
+    'ja': 'kei',  # Japanese Middle-Aged Female
+    'ko': 'seo-yun',  # Korean Middle-Aged Female
+    'pt': 'pedro',  # Portuguese Middle-Aged Male
+    'ru': 'sofia',  # Russian Middle-Aged Female
+    'zh': 'xing',  # Chinese Young Adult Male
+}
+
+def get_voice_for_language(lang_code: str) -> str:
+    """Return a default Murf voiceId for a locale code."""
+    return VOICE_BY_LANG.get(lang_code, "en-US-natalie")
+
+def translate_for_language(api_key: str, text: str, target_lang: str) -> str:
+    """Translate English text to the requested language using Gemini."""
+    if target_lang.startswith("en"):      # no translation needed
+        return text
+
+    import google.generativeai as genai
+    genai.configure(api_key=api_key)
+    model = genai.GenerativeModel("gemini-2.0-flash-exp")
+
+    prompt = (
+        f"Translate the following broadcast news script to {target_lang}. "
+        "Maintain paragraph structure, formal broadcast tone, no extra commentary.\n\n"
+        f"{text}"
+    )
+    return model.generate_content(prompt).text.strip()
 
 # Create audio directory
 AUDIO_DIR = Path("audio")
