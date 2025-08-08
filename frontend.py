@@ -5,7 +5,7 @@ import base64 # Import base64 for encoding/decoding binary data (audio content)
 import os
 
 # Constants
-SOURCE_TYPES = Literal["news", "reddit", "both"]
+SOURCE_TYPES = Literal["news", "reddit", "twitter", "both", "all"]
 BACKEND_URL = os.getenv("BACKEND_URL", "http://localhost:1234")  # Define the URL of the FastAPI backend server
 LANGS = { 
     "English - US & Canada 🇺🇸": "en-US", 
@@ -21,7 +21,7 @@ LANGS = {
 def main(): 
     # Set the title and a descriptive markdown header for the Streamlit app
     st.title("🥷 NewsNinja")
-    st.markdown("#### 🎙️ News & Reddit Audio Summarizer")
+    st.markdown("#### 🎙️ Google News, Reddit & Twitter Audio Summarizer")
    
     # Initialize session state variables if they don't already exist.
     # Session state persists data across reruns of the Streamlit app.
@@ -35,12 +35,18 @@ def main():
     # Sidebar for application settings and instructions
     with st.sidebar:
         st.header("Settings") # Header for the settings section
-        # Dropdown to select data sources (news, reddit, or both)
+        # Dropdown to select data sources with Twitter included
         source_type = st.selectbox(
             "Data Sources",
-            options=["both", "news", "reddit"],
-            # Custom format function to display options with emojis and capitalized text
-            format_func=lambda x: f"🌐 {x.capitalize()}" if x == "news" else f"📑 {x.capitalize()}"
+            options=["all", "news", "reddit", "twitter", "both"],
+            # Custom format function to display options with emojis
+            format_func=lambda x: {
+                "all": "🌐 All Sources",
+                "news": "📰 News Only", 
+                "reddit": "📑 Reddit Only",
+                "twitter": "🐦 Twitter Only",
+                "both": "📰📑 News + Reddit"
+            }[x]
         )
 
         # Language select
@@ -49,9 +55,9 @@ def main():
 
         st.markdown("---") # Horizontal rule for visual separation
         st.header("How to Use") # Header for instructions
-        # Markdown text providing step-by-step instructions for using the app
+        # Updated instructions including Twitter
         st.markdown("""
-        1.  **Select Data Sources:** Choose between 'News', 'Reddit', or 'Both' for your summary.
+        1.  **Select Data Sources:** Choose between 'News', 'Reddit', 'Twitter', 'Both', or 'All' for your summary.
         2.  **Choose Output Language:** Select your desired language for the audio and text summary.
         3.  **Add Topic:** Enter a single topic (e.g., "Artificial Intelligence") and click 'Add'.
         4.  **Generate Summary:** Click 'Generate Summary' to get your audio and text briefing.
@@ -61,12 +67,13 @@ def main():
     # Moved Features section to the main page for better visibility
     st.markdown("---") # Horizontal rule for visual separation
     st.header("Features") # Header for application features
-    # Markdown text describing the key features of the NewsNinja app
+    # Updated features including Twitter
     st.markdown("""
-    -   **🌐 Multi-Source News Analysis:** Scrape and analyze news from Google News and Reddit discussions to get comprehensive coverage of any topic.
+    -   **🌐 Multi-Source News Analysis:** Scrape and analyze news from Google News, Reddit discussions, and Twitter/X to get comprehensive coverage of any topic.
+    -   **🐦 Real-Time Twitter Insights:** Extract trending tweets and viral discussions for real-time social media insights.
     -   **🗣️ Multi-Language Support:** Generate audio and text summaries in multiple languages, including English, Hindi, Bengali and more.
-    -   **🎙️ AI-Powered Audio Generation:** Convert news summaries into high-quality audio using Murf AI's advanced text-to-speech technology with 99.38% pronunciation accuracy.
-    -   **🤖 Smart Summarization:** Uses Google Gemini 2.0 Flash to create broadcast-quality news scripts from raw headlines and discussions.
+    -   **🎙️ AI-Powered Audio Generation:** Convert news summaries into high-quality audio using Murf AI's advanced text-to-speech technology.
+    -   **🤖 Smart Summarization:** Uses Google Gemini 2.0 Flash to create broadcast-quality news scripts from raw headlines and social media discussions.
     -   **📱 Instant Access:** Get your personalized news summary in both text and audio format within seconds.
     """)
     st.markdown("---") # Add a separator after features
@@ -76,7 +83,6 @@ def main():
     col1, col2 = st.columns([4, 1]) # Create two columns for input field and add button
     with col1:
         # Text input field for entering new topics.
-        # The key is dynamically generated to ensure the widget resets when a topic is added.
         new_topic = st.text_input(
             "Enter a topic to analyze",
             key=f"topic_input_{st.session_state.input_key}",
